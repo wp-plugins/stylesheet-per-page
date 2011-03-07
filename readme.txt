@@ -6,13 +6,15 @@ Requires at least: 3.0
 Tested up to: 3.1
 Stable tag: trunk
 
-Adds a custom stylesheet/s all of the pages on your WordPress install and also allows adding IE specific stylesheets.
+Allows you to add individual stylsheets for each page or even posts. Also allows adding IE specific stylesheets. Supports custom post types.
 
 == Description ==
 
 Adds a custom stylesheet/s all of the pages on your WordPress install with options to check for the existence of the stylesheet before adding.
 
 Also allows for adding IE specific stylesheets all the way back to version 6. Just enable in the plugin options and add the stylesheets to your theme directory.
+
+This plugin supports use with custom post types.
 
 == Installation ==
 

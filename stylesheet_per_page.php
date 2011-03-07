@@ -3,7 +3,7 @@
 * Plugin Name: Stylesheet Per Page
 *
 * Description: Add custom stylesheets easily to any page on your Wordpress 
-* install
+* install, also adds IE specific stylesheets.
 *
 * Author: Josh Kohlbach
 * Author URI: http://www.codemyownroad.com
