@@ -51,3 +51,19 @@ N/A
 == Upgrade Notice ==
 
 N/A
+
+== Changelog ==
+
+* 0.3 Adding support for IE specific stylesheets
+ - Added new functionality to allow optional generation of IE specific sheets
+ 
+* 0.2 Initial code revisions
+ Changes:
+ - Structured the code better
+ - Added a menu for the options page
+ - Improved commenting
+ - Added option to not print the stylesheet if the file doesn't exist
+
+* 0.1 Initial version
+ Changes:
+ - Add a stylesheet for every page
