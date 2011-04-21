@@ -54,6 +54,9 @@ N/A
 
 == Changelog ==
 
+* 0.4 Fixing a bug with stylesheet generation on custom post types
+ - Bug fix for sheets with no name appearing when using with custom post types
+
 * 0.3 Adding support for IE specific stylesheets
  - Added new functionality to allow optional generation of IE specific sheets
  

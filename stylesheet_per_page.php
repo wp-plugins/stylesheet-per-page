@@ -8,7 +8,7 @@
 * Author: Josh Kohlbach
 * Author URI: http://www.codemyownroad.com
 * Plugin URI: http://www.codemyownroad.com/products/stylesheet-per-page-wordpress-plugin/ 
-* Version: 0.3
+* Version: 0.4
 */
 
 
@@ -20,6 +20,8 @@
 ** @since 0.2
 *******************************************************************************/
 function addCustomSheet($sheetName, $delimiter = '') {
+	if (empty($sheetName))
+		return;
 	
 	$possible_src_1 = trailingslashit(get_stylesheet_directory()) . 'css/' . 
 		$delimiter . $sheetName . '.css';
@@ -68,7 +70,7 @@ function addCustomStylesheets($stylesheets) {
 		addCustomSheet($stylesheets, 'page-');
 	} else {
 		foreach ($stylesheets as $sheetName) {
-			addCustomSheet($sheet,is_page() ? 'page-' : ''); 
+			addCustomSheet($sheetName,(is_page() ? 'page-' : '')); 
 		}
 	}
 }
