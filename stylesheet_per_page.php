@@ -8,7 +8,7 @@
 * Author: Josh Kohlbach
 * Author URI: http://www.codemyownroad.com
 * Plugin URI: http://www.codemyownroad.com/products/stylesheet-per-page-wordpress-plugin/ 
-* Version: 0.4
+* Version: 0.5
 */
 
 
@@ -31,8 +31,11 @@ function addCustomSheet($sheetName, $delimiter = '') {
 	
 	$use_src_1 = false;	
 	
+	// Retrieve plugin options
+	$stylesheetPerPage = get_option('stylesheetPerPage');
+	
 	// Optionally, check if the file exists or not
-	if (get_option('check_for_file') == 'on') {
+	if ($stylesheetPerPage['check_for_file'] == 'on') {
 		if (file_exists($possible_src_1)) {
 			// file exists in /css directory, give preference to that sheet
 			$use_src_1 = true;
@@ -99,6 +102,23 @@ function addIEStylesheets() {
 }
 
 /*******************************************************************************
+** addIosStylesheet()
+**
+** Allows you to define a ios.css file in your theme 
+** directory (or theme directory plus /css) for isolating iOS devices (ipad,
+** iphone, ipod).
+**
+** @since 0.5
+*******************************************************************************/
+function addIosStylesheet() {
+	if (strpos($_SERVER['HTTP_USER_AGENT'], 'iPad') ||
+		strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') ||
+		strpos($_SERVER['HTTP_USER_AGENT'], 'iPod')) {
+		addCustomSheet('ios');
+	}
+}
+
+/*******************************************************************************
 ** stylesheetPerPage()
 **
 ** Echo a stylesheet for the current page
@@ -129,8 +149,14 @@ function stylesheetPerPage() {
 		);
 	}
 	
-	if (!is_admin() && get_option('add_ie_stylesheets') == 'on'){
+	$stylesheetPerPage = get_option('stylesheetPerPage');
+	
+	if (!is_admin() && $stylesheetPerPage['add_ie_stylesheets'] == 'on'){
 		addIEStylesheets();
+	}
+	
+	if (!is_admin() && $stylesheetPerPage['add_ios_stylesheet'] == 'on'){
+		addIosStylesheet();
 	}
 }
 
@@ -143,8 +169,7 @@ function stylesheetPerPage() {
 *******************************************************************************/
 function stylesheetPerPageMenu() {
 	if (is_admin()) {
-		register_setting('stylesheet-per-page', 'check_for_file');
-		register_setting('stylesheet-per-page', 'add_ie_stylesheets');
+		register_setting('stylesheet-per-page', 'stylesheetPerPage');
 		add_options_page('Stylesheet Per Page Settings', 'Stylesheet Per Page', 'administrator', __FILE__, 'stylesheetPerPageOptions', plugins_url('/images/icon.png', __FILE__));
 	}
 }
@@ -163,12 +188,11 @@ function stylesheetPerPageOptions() {
 	
 	echo '<div class="wrap">' . screen_icon() . '<h2>Stylesheet Per Page</h2>';
 	
-	$check_for_file = get_option('check_for_file');
-	$check_for_file = $check_for_file ? 'checked="checked"' : '';
+	$stylesheetPerPage = get_option('stylesheetPerPage');
+	$stylesheetPerPage['check_for_file'] = $stylesheetPerPage['check_for_file'] ? 'checked="checked"' : '';
+	$stylesheetPerPage['add_ie_stylesheets'] = $stylesheetPerPage['add_ie_stylesheets'] ? 'checked="checked"' : '';
+	$stylesheetPerPage['add_ios_stylesheet'] = $stylesheetPerPage['add_ios_stylesheet'] ? 'checked="checked"' : '';
 	
-	$add_ie_stylesheets = get_option('add_ie_stylesheets');
-	$add_ie_stylesheets = $add_ie_stylesheets ? 'checked="checked"' : '';
-		
 	echo '<form method="post" action="options.php">';
 	
 	wp_nonce_field('update-options');
@@ -178,23 +202,30 @@ function stylesheetPerPageOptions() {
 	<tr valign="top">
 	<th scope="row" style="white-space: nowrap;">Check for files before placing in header?</th>
 	<td>
-	<input type="checkbox" name="check_for_file" id="check_for_file" ' . 
-	$check_for_file . ' />
+	<input type="checkbox" name="stylesheetPerPage[check_for_file]" id="check_for_file" ' . 
+	$stylesheetPerPage['check_for_file'] . ' />
 	</td></tr>
 	
 	<tr valign="top">
-	<th scope="row" style="white-space: nowrap;">Add IE specific stylesheets?</th>
+	<th scope="row" style="white-space: nowrap;"><label for="stylesheetPerPage[add_ie_stylesheets]">Add IE specific stylesheets?</label></th>
 	<td>
-	<input type="checkbox" name="add_ie_stylesheets" id="add_ie_stylesheets" ' . 
-	$add_ie_stylesheets . ' />
+	<input type="checkbox" name="stylesheetPerPage[add_ie_stylesheets]" id="add_ie_stylesheets" ' . 
+	$stylesheetPerPage['add_ie_stylesheets'] . ' />
 	<p><span class="description">Allows you to define ie.css, ie7.css and ie6.css files in your theme directory<br />
 	for isolating IE only CSS.</span></p>
 	</td></tr>
 	
+	<tr valign="top">
+	<th scope="row" style="white-space: nowrap;"><label for="stylesheetPerPage[add_ios_stylesheet]">Add iOS stylesheet?</label></th>
+	<td>
+	<input type="checkbox" name="stylesheetPerPage[add_ios_stylesheet]" id="add_ios_stylesheet" ' . 
+	$stylesheetPerPage['add_ios_stylesheet'] . ' />
+	<p><span class="description">Allows you to define ios.css in your theme directory to add a specific sheet for iOS devices (ipad, iphone, ipod)</span></p>
+	</td></tr>
+	
 	</table>
 	
-	<input type="hidden" name="page_options" value="check_for_file" />
-	<input type="hidden" name="page_options" value="add_ie_stylesheets" />
+	<input type="hidden" name="page_options" value="stylesheetPerPage" />
 		
 	<p class="submit">
 	<input type="submit" class="button-primary" value="Save Changes" />
