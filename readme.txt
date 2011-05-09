@@ -67,8 +67,8 @@ N/A
 == Changelog ==
 
 * 0.5 Added iOS specific stylesheet support and fixed option handling
-- Fixed option handling to use a single option for easy handling throughout the plugin
-- Added an iOS option for optionally printing ios.css for iOS devices.
+ - Fixed option handling to use a single option for easy handling throughout the plugin
+ - Added an iOS option for optionally printing ios.css for iOS devices.
 
 * 0.4 Fixing a bug with stylesheet generation on custom post types
  - Bug fix for sheets with no name appearing when using with custom post types
