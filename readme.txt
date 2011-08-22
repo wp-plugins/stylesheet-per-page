@@ -1,12 +1,12 @@
 === Stylesheet Per Page ===
 Contributors: jkohlbach
 Donate link: http://www.codemyownroad.com
-Tags: stylesheet, page styles, ie, ie stylesheet
+Tags: stylesheet, page styles, ie, ie stylesheet, ios stylesheet, ios, post stylesheet, post stylesheets, category stylesheet, tag stylesheet
 Requires at least: 3.0
-Tested up to: 3.1
+Tested up to: 3.2
 Stable tag: trunk
 
-Allows you to add individual stylsheets for each page or even posts. You can also add IE specific stylesheets and iOS device specific stylsheets. Supports custom post types.
+Add custom stylesheets, IE override stylesheets, iOS stylesheets, to any page or post on your Wordpress website.
 
 == Description ==
 
@@ -14,9 +14,9 @@ Adds a custom stylesheet/s all of the pages on your WordPress install with optio
 
 Allows for adding IE specific stylesheets all the way back to version 6. Just enable in the plugin options and add the stylesheets to your theme directory.
 
-NEW in 0.5 - Stylesheet Per Page now allows adding of an iOS specific stylesheet. Simply enable in the plugin options and add the stylesheet to your theme directory.
+Stylesheet Per Page now allows adding of an iOS specific stylesheet. Simply enable in the plugin options and add the stylesheet to your theme directory.
 
-This plugin supports use with custom post types.
+This plugin supports use with custom post types, category, and tag pages.
 
 == Installation ==
 
@@ -25,24 +25,26 @@ This plugin supports use with custom post types.
 
 To use this plugin, just add stylesheets in the following formats to your theme's base directory or a "css" subdirectory inside your theme's base directory:
 
-* For pages use page-[page_name].css where "page_name" is the slug of the page.
+* For pages create a file called page-[page_name].css where "[page_name]" is replaced with the slug of the page. Eg: page-about.css.
 
-* For author pages use user.css and for individual user pages user-[username].css.
+* For author pages create a file called user.css and for individual user pages user-[username].css where "[username]" is replaced with the user's login name.
 
-* For different post types user [post_type].css where "post_type" is the name of the custom post type or just 'post' for regular posts.
+* For different post types user [post_type].css where "[post_type]" is replaced with the name of the custom post type. You can also use just 'post' for regular posts. Eg. post.css.
 
-* For individual posts use [post_type]-[post_name].css where "post_type" is the custom post type or just 'post' for regular posts, and "post_name" is the slug of the post.
+* For individual posts use [post_type]-[post_name].css where "[post_type]" is replaced with the name of the custom post type or just 'post' for regular posts, and "[post_name]" is the slug of the post. Eg. post-10-tips-for-baking-pies.css, or, say if you had a "recipes" post type use something like recipes-classic-french-cheesecake.css.
 
 * To activate IE specific stylesheets just create css files with the following naming:
 ie.css (covers all IE versions), ie7.css (covers IE 7 and below), ie6.css (covers IE 6 and below).
 
 * To activate an iOS specific stylsheet create ios.css and enable in the plugin options.
 
+NOTE: You can place your custom CSS files in either the base directory of your theme, or in a "css" subdirectory inside your theme, but try to be consistent with where you place them.
+
 == Frequently Asked Questions ==
 
 = How do I activate IE stylesheets? =
 To activate stylesheets enable the option in the plugin options and create css files with the following naming convention:
-ie.css (covers all IE versions), ie7.css (covers IE 7 and below), ie6.css (covers IE 6 and below).
+ie.css (overrides for all IE versions), ie8.css (overrides for IE 8 and below), ie7.css (overrides for IE 7 and below), ie6.css (overrides for IE 6 and below).
 
 = How do I get Stylesheet Per Page to check for the files first before trying to include them? =
 
@@ -66,6 +68,10 @@ N/A
 
 == Changelog ==
 
+* 0.6 Added IE8 stylesheet capabilities since IE9 was released
+ - Added ability to add ie8.css file to cater for IE8 quirkyness
+ - Tidied up installation instructions a bit
+
 * 0.5 Added iOS specific stylesheet support and fixed option handling
  - Fixed option handling to use a single option for easy handling throughout the plugin
  - Added an iOS option for optionally printing ios.css for iOS devices.
@@ -77,12 +83,10 @@ N/A
  - Added new functionality to allow optional generation of IE specific sheets
  
 * 0.2 Initial code revisions
- Changes:
  - Structured the code better
  - Added a menu for the options page
  - Improved commenting
  - Added option to not print the stylesheet if the file doesn't exist
 
 * 0.1 Initial version
- Changes:
  - Add a stylesheet for every page

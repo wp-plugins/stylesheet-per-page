@@ -2,13 +2,12 @@
 /*
 * Plugin Name: Stylesheet Per Page
 *
-* Description: Add custom stylesheets easily to any page on your Wordpress 
-* install, also adds IE specific stylesheets.
+* Description: Add custom stylesheets, IE override stylesheets, iOS stylesheets, to any page or post on your Wordpress website.
 *
 * Author: Josh Kohlbach
 * Author URI: http://www.codemyownroad.com
 * Plugin URI: http://www.codemyownroad.com/products/stylesheet-per-page-wordpress-plugin/ 
-* Version: 0.5
+* Version: 0.6
 */
 
 
@@ -81,7 +80,7 @@ function addCustomStylesheets($stylesheets) {
 /*******************************************************************************
 ** addIEStylesheets()
 **
-** Allows you to define ie.css, ie7.css and ie6.css files in your theme 
+** Allows you to define ie.css, ie8.css, ie7.css and ie6.css files in your theme 
 ** directory (or theme directory plus /css) for isolating IE only CSS.
 **
 ** @since 0.3
@@ -89,6 +88,7 @@ function addCustomStylesheets($stylesheets) {
 function addIEStylesheets() {
 	$ieSheets = array(
 		'IE' => 'ie',
+		'lte IE 8' => 'ie8',
 		'lte IE 7' => 'ie7',
 		'lte IE 6' => 'ie6'
 	);
