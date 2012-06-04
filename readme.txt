@@ -70,11 +70,11 @@ N/A
 == Changelog ==
 
 * 1.0 Added Tag, Category and Archive CSS files
-- Officially versioned as 1.0 as it's been pretty stable
-- Added tag.css and tag-[tag_name].css for tag pages
-- Added category.css and category-[category_name].css for category pages
-- Added archive.css for archive pages
-- When not selecting check for files first, now printing out files under css directory as well
+ - Officially versioned as 1.0 as it's been pretty stable
+ - Added tag.css and tag-[tag_name].css for tag pages
+ - Added category.css and category-[category_name].css for category pages
+ - Added archive.css for archive pages
+ - When not selecting check for files first, now printing out files under css directory as well
 
 * 0.6 Added IE8 stylesheet capabilities since IE9 was released
  - Added ability to add ie8.css file to cater for IE8 quirkyness
