@@ -33,8 +33,13 @@ To use this plugin, just add stylesheets in the following formats to your theme'
 
 * For individual posts use [post_type]-[post_name].css where "[post_type]" is replaced with the name of the custom post type or just 'post' for regular posts, and "[post_name]" is the slug of the post. Eg. post-10-tips-for-baking-pies.css, or, say if you had a "recipes" post type use something like recipes-classic-french-cheesecake.css.
 
-* To activate IE specific stylesheets just create css files with the following naming:
-ie.css (covers all IE versions), ie7.css (covers IE 7 and below), ie6.css (covers IE 6 and below).
+* For tag pages use tag.css or tag-[tag_name].css where "[tag_name]" is replaced with the slug of the tag
+
+* For category pages use category.css or category-[category_name].css where "[category_name]" is replaced with the slug of the category
+
+* For archive pages use archive.css
+
+* To activate IE specific stylesheets just create css files with the following naming: ie.css (covers all IE versions), ie8.css (covers IE 8 and below), ie7.css (covers IE 7 and below), ie6.css (covers IE 6 and below).
 
 * To activate an iOS specific stylsheet create ios.css and enable in the plugin options.
 
@@ -54,10 +59,6 @@ Easy, just tick the option under the Stylesheet Per Page admin options under fou
 
 To activate an iOS specific stylsheet create ios.css and place it in your theme's base directory or css subdirectory inside your theme's base directory. You will also need to enable the checkbox in the plugin options.
 
-= Is there a development version of this plugin? =
-
-Yes, you can find it on github at http://github.com/jkohlbach, but it's more often than not the same version as here unless I'm actively working on it.
-
 == Screenshots ==
 
 N/A
@@ -67,6 +68,13 @@ N/A
 N/A
 
 == Changelog ==
+
+* 1.0 Added Tag, Category and Archive CSS files
+- Officially versioned as 1.0 as it's been pretty stable
+- Added tag.css and tag-[tag_name].css for tag pages
+- Added category.css and category-[category_name].css for category pages
+- Added archive.css for archive pages
+- When not selecting check for files first, now printing out files under css directory as well
 
 * 0.6 Added IE8 stylesheet capabilities since IE9 was released
  - Added ability to add ie8.css file to cater for IE8 quirkyness

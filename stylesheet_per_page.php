@@ -7,7 +7,7 @@
 * Author: Josh Kohlbach
 * Author URI: http://www.codemyownroad.com
 * Plugin URI: http://www.codemyownroad.com/products/stylesheet-per-page-wordpress-plugin/ 
-* Version: 0.6
+* Version: 1.0
 */
 
 
@@ -45,6 +45,13 @@ function addCustomSheet($sheetName, $delimiter = '') {
 				return;
 			}
 		}
+	} else {
+		// need both files because we're just print it regardless of whether it
+		// exists or not
+		$src1 = trailingslashit(get_bloginfo('stylesheet_directory')) . 'css/' . 
+			$delimiter . $sheetName . '.css';
+		$src2 = trailingslashit(get_bloginfo('stylesheet_directory')) . 
+			$delimiter . $sheetName . '.css';
 	}
 	
 	if ($use_src_1) {
@@ -57,7 +64,13 @@ function addCustomSheet($sheetName, $delimiter = '') {
 			$delimiter . $sheetName . '.css';
 	}
 	
-	echo '<link href="' . $src . '" rel="stylesheet" type="text/css" />'; 
+	if ($stylesheetPerPage['check_for_file'] == 'on') {
+		echo '<link href="' . $src . '" rel="stylesheet" type="text/css" />';
+	} else {
+		echo '<link href="' . $src1 . '" rel="stylesheet" type="text/css" />';
+		echo '<link href="' . $src2 . '" rel="stylesheet" type="text/css" />';
+	}
+		
 }
 
 /*******************************************************************************
@@ -145,6 +158,26 @@ function stylesheetPerPage() {
 			array(
 				$page_obj->post_type, 
 				$page_obj->post_type . '-' . $page_obj->post_name
+			)
+		);
+	} else if (is_category()) {
+		addCustomStylesheets(
+			array(
+				'category',
+				'category-' . $page_obj->slug
+			)
+		);
+	} else if (is_tag()) {
+		addCustomStylesheets(
+			array(
+				'tag',
+				'tag-' . $page_obj->slug
+			)
+		);
+	} else if (is_archive()) {
+		addCustomStylesheets(
+			array(
+				'archive'
 			)
 		);
 	}
