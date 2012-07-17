@@ -7,7 +7,7 @@
 * Author: Josh Kohlbach
 * Author URI: http://www.codemyownroad.com
 * Plugin URI: http://www.codemyownroad.com/products/stylesheet-per-page-wordpress-plugin/ 
-* Version: 1.0
+* Version: 1.1
 */
 
 
@@ -178,6 +178,18 @@ function stylesheetPerPage() {
 		addCustomStylesheets(
 			array(
 				'archive'
+			)
+		);
+	} else if (is_home()) {
+		addCustomStylesheets(
+			array(
+				'home'
+			)
+		);
+	} else if (is_front_page()) {
+		addCustomStylesheets(
+			array(
+				'front-page'
 			)
 		);
 	}

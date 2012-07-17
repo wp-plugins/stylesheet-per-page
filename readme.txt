@@ -39,6 +39,8 @@ To use this plugin, just add stylesheets in the following formats to your theme'
 
 * For archive pages use archive.css
 
+* For home and front pages use home.css and front-page.css respectively
+
 * To activate IE specific stylesheets just create css files with the following naming: ie.css (covers all IE versions), ie8.css (covers IE 8 and below), ie7.css (covers IE 7 and below), ie6.css (covers IE 6 and below).
 
 * To activate an iOS specific stylsheet create ios.css and enable in the plugin options.
@@ -68,6 +70,9 @@ N/A
 N/A
 
 == Changelog ==
+
+* 1.1 Added Home and Front Page stylesheets
+ - home.css and front-page.css now work to override default homepage styles
 
 * 1.0 Added Tag, Category and Archive CSS files
  - Officially versioned as 1.0 as it's been pretty stable
