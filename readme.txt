@@ -71,6 +71,9 @@ N/A
 
 == Changelog ==
 
+* 1.1.1 Fixing warnings
+ - Fixing some warnings on array checks that show up if user hasn't saved settings yet
+
 * 1.1 Added Home and Front Page stylesheets
  - home.css and front-page.css now work to override default homepage styles
 

@@ -7,7 +7,7 @@
 * Author: Josh Kohlbach
 * Author URI: http://www.codemyownroad.com
 * Plugin URI: http://www.codemyownroad.com/products/stylesheet-per-page-wordpress-plugin/ 
-* Version: 1.1
+* Version: 1.1.1
 */
 
 
@@ -34,7 +34,7 @@ function addCustomSheet($sheetName, $delimiter = '') {
 	$stylesheetPerPage = get_option('stylesheetPerPage');
 	
 	// Optionally, check if the file exists or not
-	if ($stylesheetPerPage['check_for_file'] == 'on') {
+	if (isset($stylesheetPerPage['check_for_file']) && $stylesheetPerPage['check_for_file'] == 'on') {
 		if (file_exists($possible_src_1)) {
 			// file exists in /css directory, give preference to that sheet
 			$use_src_1 = true;
@@ -64,7 +64,7 @@ function addCustomSheet($sheetName, $delimiter = '') {
 			$delimiter . $sheetName . '.css';
 	}
 	
-	if ($stylesheetPerPage['check_for_file'] == 'on') {
+	if (isset($stylesheetPerPage['check_for_file']) && $stylesheetPerPage['check_for_file'] == 'on') {
 		echo '<link href="' . $src . '" rel="stylesheet" type="text/css" />';
 	} else {
 		echo '<link href="' . $src1 . '" rel="stylesheet" type="text/css" />';
@@ -196,11 +196,11 @@ function stylesheetPerPage() {
 	
 	$stylesheetPerPage = get_option('stylesheetPerPage');
 	
-	if (!is_admin() && $stylesheetPerPage['add_ie_stylesheets'] == 'on'){
+	if (!is_admin() && isset($stylesheetPerPage['add_ie_stylesheets']) && $stylesheetPerPage['add_ie_stylesheets'] == 'on'){
 		addIEStylesheets();
 	}
 	
-	if (!is_admin() && $stylesheetPerPage['add_ios_stylesheet'] == 'on'){
+	if (!is_admin() && isset($stylesheetPerPage['add_ios_stylesheet']) &&  $stylesheetPerPage['add_ios_stylesheet'] == 'on'){
 		addIosStylesheet();
 	}
 }
@@ -234,9 +234,9 @@ function stylesheetPerPageOptions() {
 	echo '<div class="wrap">' . screen_icon() . '<h2>Stylesheet Per Page</h2>';
 	
 	$stylesheetPerPage = get_option('stylesheetPerPage');
-	$stylesheetPerPage['check_for_file'] = $stylesheetPerPage['check_for_file'] ? 'checked="checked"' : '';
-	$stylesheetPerPage['add_ie_stylesheets'] = $stylesheetPerPage['add_ie_stylesheets'] ? 'checked="checked"' : '';
-	$stylesheetPerPage['add_ios_stylesheet'] = $stylesheetPerPage['add_ios_stylesheet'] ? 'checked="checked"' : '';
+	$stylesheetPerPage['check_for_file'] = isset($stylesheetPerPage['check_for_file']) ? 'checked="checked"' : '';
+	$stylesheetPerPage['add_ie_stylesheets'] = isset($stylesheetPerPage['add_ie_stylesheets']) ? 'checked="checked"' : '';
+	$stylesheetPerPage['add_ios_stylesheet'] = isset($stylesheetPerPage['add_ios_stylesheet']) ? 'checked="checked"' : '';
 	
 	echo '<form method="post" action="options.php">';
 	
