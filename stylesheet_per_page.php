@@ -6,8 +6,8 @@
 *
 * Author: Josh Kohlbach
 * Author URI: http://www.codemyownroad.com
-* Plugin URI: http://www.codemyownroad.com/products/stylesheet-per-page-wordpress-plugin/ 
-* Version: 1.1.1
+* Plugin URI: http://www.codemyownroad.com/products/stylesheet-per-page-wordpress-plugin/
+* Version: 1.1.2
 */
 
 
@@ -21,18 +21,18 @@
 function addCustomSheet($sheetName, $delimiter = '') {
 	if (empty($sheetName))
 		return;
-	
-	$possible_src_1 = trailingslashit(get_stylesheet_directory()) . 'css/' . 
+
+	$possible_src_1 = trailingslashit(get_stylesheet_directory()) . 'css/' .
 		$delimiter . $sheetName . '.css';
-		
-	$possible_src_2 = trailingslashit(get_stylesheet_directory()) . 
+
+	$possible_src_2 = trailingslashit(get_stylesheet_directory()) .
 		$delimiter . $sheetName . '.css';
-	
-	$use_src_1 = false;	
-	
+
+	$use_src_1 = false;
+
 	// Retrieve plugin options
 	$stylesheetPerPage = get_option('stylesheetPerPage');
-	
+
 	// Optionally, check if the file exists or not
 	if (isset($stylesheetPerPage['check_for_file']) && $stylesheetPerPage['check_for_file'] == 'on') {
 		if (file_exists($possible_src_1)) {
@@ -48,29 +48,29 @@ function addCustomSheet($sheetName, $delimiter = '') {
 	} else {
 		// need both files because we're just print it regardless of whether it
 		// exists or not
-		$src1 = trailingslashit(get_bloginfo('stylesheet_directory')) . 'css/' . 
+		$src1 = trailingslashit(get_bloginfo('stylesheet_directory')) . 'css/' .
 			$delimiter . $sheetName . '.css';
-		$src2 = trailingslashit(get_bloginfo('stylesheet_directory')) . 
+		$src2 = trailingslashit(get_bloginfo('stylesheet_directory')) .
 			$delimiter . $sheetName . '.css';
 	}
-	
+
 	if ($use_src_1) {
 		// File exists in /css dir
-		$src = trailingslashit(get_bloginfo('stylesheet_directory')) . 'css/' . 
+		$src = trailingslashit(get_bloginfo('stylesheet_directory')) . 'css/' .
 			$delimiter . $sheetName . '.css';
 	} else {
 		// Use file in root dir
-		$src = trailingslashit(get_bloginfo('stylesheet_directory')) . 
+		$src = trailingslashit(get_bloginfo('stylesheet_directory')) .
 			$delimiter . $sheetName . '.css';
 	}
-	
+
 	if (isset($stylesheetPerPage['check_for_file']) && $stylesheetPerPage['check_for_file'] == 'on') {
 		echo '<link href="' . $src . '" rel="stylesheet" type="text/css" />';
 	} else {
 		echo '<link href="' . $src1 . '" rel="stylesheet" type="text/css" />';
 		echo '<link href="' . $src2 . '" rel="stylesheet" type="text/css" />';
 	}
-		
+
 }
 
 /*******************************************************************************
@@ -85,7 +85,7 @@ function addCustomStylesheets($stylesheets) {
 		addCustomSheet($stylesheets, 'page-');
 	} else {
 		foreach ($stylesheets as $sheetName) {
-			addCustomSheet($sheetName,(is_page() ? 'page-' : '')); 
+			addCustomSheet($sheetName,(is_page() ? 'page-' : ''));
 		}
 	}
 }
@@ -93,7 +93,7 @@ function addCustomStylesheets($stylesheets) {
 /*******************************************************************************
 ** addIEStylesheets()
 **
-** Allows you to define ie.css, ie8.css, ie7.css and ie6.css files in your theme 
+** Allows you to define ie.css, ie8.css, ie7.css and ie6.css files in your theme
 ** directory (or theme directory plus /css) for isolating IE only CSS.
 **
 ** @since 0.3
@@ -105,19 +105,19 @@ function addIEStylesheets() {
 		'lte IE 7' => 'ie7',
 		'lte IE 6' => 'ie6'
 	);
-	
+
 	foreach ($ieSheets as $key => $value) {
 		echo '<!--[if ' . $key . ']>';
 		addCustomSheet($value);
 		echo "<![endif]-->\n";
 	}
-	
+
 }
 
 /*******************************************************************************
 ** addIosStylesheet()
 **
-** Allows you to define a ios.css file in your theme 
+** Allows you to define a ios.css file in your theme
 ** directory (or theme directory plus /css) for isolating iOS devices (ipad,
 ** iphone, ipod).
 **
@@ -141,7 +141,7 @@ function addIosStylesheet() {
 function stylesheetPerPage() {
 	global $wp_query;
 	$page_obj = $wp_query->get_queried_object();
-	
+
 	if (is_page()) {
 		addCustomStylesheets(
 			$page_obj->post_name
@@ -149,14 +149,14 @@ function stylesheetPerPage() {
 	} else if (is_author()) {
 		addCustomStylesheets(
 			array(
-				'user', 
+				'user',
 				'user-' . $page_obj->user_login
 			)
 		);
 	} else if (is_singular()) {
 		addCustomStylesheets(
 			array(
-				$page_obj->post_type, 
+				$page_obj->post_type,
 				$page_obj->post_type . '-' . $page_obj->post_name
 			)
 		);
@@ -193,13 +193,28 @@ function stylesheetPerPage() {
 			)
 		);
 	}
-	
+
+	// 1.1.2: add user logged in stylesheets
+	if (is_user_logged_in()) {
+		addCustomStylesheets(
+			array(
+				'logged-in'
+			)
+		);
+	} else if (!is_user_logged_in()) {
+		addCustomStylesheets(
+			array(
+				'logged-out'
+			)
+		);
+	}
+
 	$stylesheetPerPage = get_option('stylesheetPerPage');
-	
+
 	if (!is_admin() && isset($stylesheetPerPage['add_ie_stylesheets']) && $stylesheetPerPage['add_ie_stylesheets'] == 'on'){
 		addIEStylesheets();
 	}
-	
+
 	if (!is_admin() && isset($stylesheetPerPage['add_ios_stylesheet']) &&  $stylesheetPerPage['add_ios_stylesheet'] == 'on'){
 		addIosStylesheet();
 	}
@@ -230,52 +245,52 @@ function stylesheetPerPageOptions() {
 	if (!current_user_can('manage_options'))  {
 		wp_die( __('You do not have suffifient permissions to access this page.') );
 	}
-	
+
 	echo '<div class="wrap">' . screen_icon() . '<h2>Stylesheet Per Page</h2>';
-	
+
 	$stylesheetPerPage = get_option('stylesheetPerPage');
 	$stylesheetPerPage['check_for_file'] = isset($stylesheetPerPage['check_for_file']) ? 'checked="checked"' : '';
 	$stylesheetPerPage['add_ie_stylesheets'] = isset($stylesheetPerPage['add_ie_stylesheets']) ? 'checked="checked"' : '';
 	$stylesheetPerPage['add_ios_stylesheet'] = isset($stylesheetPerPage['add_ios_stylesheet']) ? 'checked="checked"' : '';
-	
+
 	echo '<form method="post" action="options.php">';
-	
+
 	wp_nonce_field('update-options');
 	settings_fields( 'stylesheet-per-page' );
-	
+
 	echo '<table class="form-table">
 	<tr valign="top">
 	<th scope="row" style="white-space: nowrap;">Check for files before placing in header?</th>
 	<td>
-	<input type="checkbox" name="stylesheetPerPage[check_for_file]" id="check_for_file" ' . 
+	<input type="checkbox" name="stylesheetPerPage[check_for_file]" id="check_for_file" ' .
 	$stylesheetPerPage['check_for_file'] . ' />
 	</td></tr>
-	
+
 	<tr valign="top">
 	<th scope="row" style="white-space: nowrap;"><label for="stylesheetPerPage[add_ie_stylesheets]">Add IE specific stylesheets?</label></th>
 	<td>
-	<input type="checkbox" name="stylesheetPerPage[add_ie_stylesheets]" id="add_ie_stylesheets" ' . 
+	<input type="checkbox" name="stylesheetPerPage[add_ie_stylesheets]" id="add_ie_stylesheets" ' .
 	$stylesheetPerPage['add_ie_stylesheets'] . ' />
 	<p><span class="description">Allows you to define ie.css, ie7.css and ie6.css files in your theme directory<br />
 	for isolating IE only CSS.</span></p>
 	</td></tr>
-	
+
 	<tr valign="top">
 	<th scope="row" style="white-space: nowrap;"><label for="stylesheetPerPage[add_ios_stylesheet]">Add iOS stylesheet?</label></th>
 	<td>
-	<input type="checkbox" name="stylesheetPerPage[add_ios_stylesheet]" id="add_ios_stylesheet" ' . 
+	<input type="checkbox" name="stylesheetPerPage[add_ios_stylesheet]" id="add_ios_stylesheet" ' .
 	$stylesheetPerPage['add_ios_stylesheet'] . ' />
 	<p><span class="description">Allows you to define ios.css in your theme directory to add a specific sheet for iOS devices (ipad, iphone, ipod)</span></p>
 	</td></tr>
-	
+
 	</table>
-	
+
 	<input type="hidden" name="page_options" value="stylesheetPerPage" />
-		
+
 	<p class="submit">
 	<input type="submit" class="button-primary" value="Save Changes" />
 	</p>
-	
+
 	</form>
 	</div>';
 
@@ -291,7 +306,7 @@ function stylesheetPerPageOptions() {
 *******************************************************************************/
 function initStylesheetPerPage() {
 	add_filter('wp_head', 'stylesheetPerPage', 999);
-	add_action('admin_menu', 'stylesheetPerPageMenu');	
+	add_action('admin_menu', 'stylesheetPerPageMenu');
 }
 
 add_action('init', 'initStylesheetPerPage', 1);

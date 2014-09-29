@@ -45,6 +45,10 @@ To use this plugin, just add stylesheets in the following formats to your theme'
 
 * To activate an iOS specific stylsheet create ios.css and enable in the plugin options.
 
+* For targeting logged in users use stylesheet logged-in.css
+
+* For targeting logged out users use stylesheet logged-out.css
+
 NOTE: You can place your custom CSS files in either the base directory of your theme, or in a "css" subdirectory inside your theme, but try to be consistent with where you place them.
 
 == Frequently Asked Questions ==
@@ -70,6 +74,9 @@ N/A
 N/A
 
 == Changelog ==
+
+* 1.1.2
+ - Adding user logged in/out stylesheets
 
 * 1.1.1 Fixing warnings
  - Fixing some warnings on array checks that show up if user hasn't saved settings yet
