@@ -3,7 +3,7 @@ Contributors: jkohlbach
 Donate link: http://www.codemyownroad.com
 Tags: stylesheet, page styles, ie, ie stylesheet, ios stylesheet, ios, post stylesheet, post stylesheets, category stylesheet, tag stylesheet
 Requires at least: 3.0
-Tested up to: 4.1
+Tested up to: 4.2
 Stable tag: trunk
 
 Add custom stylesheets, IE override stylesheets, iOS stylesheets, to any page or post on your Wordpress website.
